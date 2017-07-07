@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--todo make this customizable from outer app-->
+    <color name="dlg_title_txt">#44A5AB</color>
+    <color name="dlg_msg_txt">#3D3D3D</color>
+    <color name="dlg_btn_txt">#44A5AB</color>
+    <color name="dlg_divider">#CDCDCD</color>
+    <color name="dlg_stroke">#CDCDCD</color>
+
+</resources>
