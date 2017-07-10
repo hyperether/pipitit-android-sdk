@@ -35,6 +35,6 @@ public class ConfirmProcessDeliveredRequest extends PipititServerRequest {
 
     @Override
     public JSONObject getJsonObject() {
-        return null;
+        return new JSONObject();
     }
 }
