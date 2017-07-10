@@ -261,8 +261,11 @@ public class PipititManager {
             });
         else {
             PipititLogger.d(TAG, "we receive message but activity is null or message is null");
-            NotificationHandler.getInstance().showNotification(mAppContext, "",
-                    campaignMessage.getPayload().getMessage());
+            if (campaignMessage != null) {
+                NotificationHandler.getInstance().showNotification(mAppContext, "",
+                        campaignMessage.getPayload().getMessage());
+            }
+
         }
     }
 
