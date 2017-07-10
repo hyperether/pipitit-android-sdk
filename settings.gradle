@@ -1,1 +1,1 @@
-include ':app', ':pipitit.android'
+include ':app', ':pipitit-android'
