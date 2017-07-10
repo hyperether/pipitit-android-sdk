@@ -1,2 +1,37 @@
 # pipitit-android-sdk
-Pipitit Android Sdk
+
+**Android Sdk**
+
+**Gradle import**
+
+    compile ('com.hyperether:pipitit-android:1.0.0@aar'){
+        transitive = true
+    }
+
+**Usage**
+
+        PipititConfig config = new PipititConfig.Builder()
+                .setDebug(true|false)
+                .setSendingPushEnabled(true|false)
+                .setListener(TODO: put listener Activity)
+                .setURL(TODO: put service URL)
+                .setWebSocketEnabled(true|false)
+                .setNotificationWakeUp(true|false)
+                .build(context);
+        PipititManager.init(getApplication(), config);
+
+**User login**
+
+            PipititManager.getInstance().setUsername(username);
+            PipititManager.getInstance().setEmail(email);
+            
+**User logout**
+
+            PipititManager.clear(getApplication(), true);
+            
+**Version Support**
+            
+The Android SDK supports Android 4.1+.
+
+
+            
