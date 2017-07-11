@@ -22,12 +22,17 @@
 
 **User login**
 
-            PipititManager.getInstance().setUsername(username);
-            PipititManager.getInstance().setEmail(email);
+        PipititManager.getInstance().setUsername(username);
+        PipititManager.getInstance().setEmail(email);
             
 **User logout**
 
-            PipititManager.clear(getApplication(), true);
+        PipititManager.clear(getApplication(), true);
+            
+**Resources setup**
+
+        <string name="com_hyperether_pipitit_server_push" tools:override="true">TODO: ADD</string>
+        <string name="pipitit_api_key" tools:override="true">TODO: ADD</string>
             
 **Version Support**
             
