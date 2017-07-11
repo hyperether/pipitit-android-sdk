@@ -1,15 +1,39 @@
 apply plugin: 'com.android.library'
 
+ext {
+    bintrayRepo = 'pipitit-android-sdk'
+    bintrayName = 'pipitit-android-sdk'
+
+    publishedGroupId = 'com.hyperether'
+    libraryName = 'pipitit-android-sdk'
+    artifact = 'pipitit-android'
+
+    libraryDescription = 'Android Sdk for Pipitit service'
+
+    siteUrl = 'https://github.com/hyperether/pipitit-android-sdk'
+    gitUrl = 'https://github.com/hyperether/pipitit-android-sdk.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'hyperether'
+    developerName = 'HyperEther'
+    developerEmail = 'info@hyperether.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 android {
     useLibrary 'org.apache.http.legacy'
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
-    publishNonDefault true
+    publishNonDefault false
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -41,3 +65,6 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxjava:2.0.5'
     compile 'com.jakewharton.rxrelay2:rxrelay:2.0.0'
 }
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
