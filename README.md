@@ -4,7 +4,7 @@
 
 **Gradle import**
 
-    compile ('com.hyperether:pipitit-android:1.0.0@aar'){
+    compile ('com.hyperether:pipitit-android:1.0.1@aar'){
         transitive = true
     }
 
