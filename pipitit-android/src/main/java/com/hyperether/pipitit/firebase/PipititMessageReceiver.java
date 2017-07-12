@@ -35,7 +35,6 @@ public class PipititMessageReceiver extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage message) {
         if (PipititManager.getConfig(getApplicationContext())
                 .isFcmRegistrationEnabled(getApplicationContext())) {
-            PipititApp.getInstance().send(message);
             CustomPushNotification customPushNotification = null;
             try {
                 if (message != null) {
@@ -45,6 +44,7 @@ public class PipititMessageReceiver extends FirebaseMessagingService {
                                     message.getSentTime() +
                                     ", data = " + message.getData() + ", from = " +
                                     message.getFrom());
+                    PipititApp.getInstance().send(message.getData());
                     if (message.getData() != null && message.getData().get("message") != null)
                         try {
                             customPushNotification = new Gson().fromJson(

@@ -2,7 +2,7 @@ package com.hyperether.pipitit.firebase;
 
 import android.content.Intent;
 
-import com.google.firebase.messaging.RemoteMessage;
+import java.util.Map;
 
 /**
  * Listener for received push message
@@ -12,7 +12,7 @@ import com.google.firebase.messaging.RemoteMessage;
  */
 public interface PipititPushListener {
 
-    void onFirebaseMessageReceived(RemoteMessage message);
+    void onFirebaseMessageReceived(Map message);
 
     void onGCMMessageReceived(Intent message);
 

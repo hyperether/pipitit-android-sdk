@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.android.volley.Request;
-import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
 import com.hyperether.pipitit.api.ApiResponseCallback;
 import com.hyperether.pipitit.api.PipititApiManager;
@@ -30,6 +29,8 @@ import com.hyperether.pipitit.notification.NotificationHandler;
 import com.hyperether.pipitit.notification.dialogs.PipititBaseDialog;
 import com.hyperether.pipitit.util.SharedPreferenceUtil;
 import com.hyperether.pipitit.websocket.PipititWebSocketManager;
+
+import java.util.Map;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -67,12 +68,12 @@ public class PipititManager {
         @Override
         public void onNext(Object value) {
             PipititLogger.d(TAG, "onNext: " + value);
-            if (value instanceof RemoteMessage) {
-                onPushReceived((RemoteMessage) value);
-            } else if (value instanceof CampaignMessage) {
+            if (value instanceof CampaignMessage) {
                 onCampaignMessageReceive((CampaignMessage) value);
             } else if (value instanceof Intent) {
                 onIntentPushReceived((Intent) value);
+            } else if (value instanceof Map) {
+                onPushReceived((Map) value);
             }
         }
 
@@ -244,7 +245,7 @@ public class PipititManager {
         PipititWebSocketManager.getInstance(mAppContext).startWebSocket(urlWs, mAppContext);
     }
 
-    private void onPushReceived(RemoteMessage message) {
+    private void onPushReceived(Map message) {
         if (listener != null) {
             listener.onFirebaseMessageReceived(message);
             PipititLogger.d(TAG, "Message from Firebase send to PipititPushListener");
