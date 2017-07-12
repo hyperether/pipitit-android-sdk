@@ -1,13 +1,16 @@
 package com.hyperether.pipitit.util;
 
 import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
@@ -15,10 +18,14 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.hyperether.pipitit.PipititManager;
 import com.hyperether.pipitit.cache.PipititLogger;
 
 import java.lang.reflect.Method;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -45,7 +52,88 @@ public class SystemInfo {
     }
 
     public String getAndroidId(Context context) {
-        return FirebaseInstanceId.getInstance().getId();
+        if (PipititManager.getConfig(context).isFcmRegistrationEnabled(context)) {
+            FirebaseApp.initializeApp(context);
+            return FirebaseInstanceId.getInstance().getId();
+        } else
+            return makeUniqueId(context);
+    }
+
+    private String makeUniqueId(Context context) {
+        String id = null;
+        String imei = "";
+        String wifiMac = "";
+        String bluetoothAddress = "";
+        try {
+            TelephonyManager tm = getTelephonyManager(context);
+            if (tm != null) {
+                imei = tm.getDeviceId();
+            }
+        } catch (Exception e) {
+            PipititLogger.e(TAG, "makeUniqueId -  imei ", e);
+        }
+        String devIDShort = "131" +
+                Build.BOARD.length() % 10 + Build.BRAND.length() % 10 + Build.DEVICE.length() % 10 +
+                Build.DISPLAY.length() % 10 + Build.HOST.length() % 10 +
+                Build.ID.length() % 10 + Build.MANUFACTURER.length() % 10 +
+                Build.MODEL.length() % 10 + Build.PRODUCT.length() % 10 +
+                Build.TAGS.length() % 10 + Build.TYPE.length() % 10 +
+                Build.USER.length() % 10; //13 digits
+
+        String androidId =
+                Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+
+        try {
+            WifiManager wm = (WifiManager) context.getApplicationContext()
+                    .getSystemService(Context.WIFI_SERVICE);
+            wifiMac = wm.getConnectionInfo().getMacAddress();
+        } catch (Exception e) {
+            PipititLogger.e(TAG, "makeUniqueId -  wifi ", e);
+        }
+
+        try {
+            BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            bluetoothAddress = bluetoothAdapter.getAddress();
+        } catch (Exception e) {
+            PipititLogger.e(TAG, "makeUniqueId -  bluetooth ", e);
+        }
+        PipititLogger.d(TAG, "Imei - " + imei);
+        PipititLogger.d(TAG, "devIDShort - " + devIDShort);
+        PipititLogger.d(TAG, "androidId - " + androidId);
+        PipititLogger.d(TAG, "wifiMac - " + wifiMac);
+        PipititLogger.d(TAG, "bluetooth - " + bluetoothAddress);
+        id = imei + devIDShort + androidId + wifiMac + bluetoothAddress;
+        try {
+            // compute md5
+            MessageDigest m = null;
+            try {
+                m = MessageDigest.getInstance("MD5");
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+                PipititLogger.e(TAG, "makeUniqueId -  digest  ", e);
+            }
+            m.update(id.getBytes(), 0, id.length());
+            // get md5 bytes
+            byte p_md5Data[] = m.digest();
+            // create a hex string
+            String m_szUniqueID = new String();
+            for (int i = 0; i < p_md5Data.length; i++) {
+                int b = (0xFF & p_md5Data[i]);
+                // if it is a single digit, make sure it have 0 in front (proper padding)
+                if (b <= 0xF) m_szUniqueID += "0";
+                // add number to string
+                m_szUniqueID += Integer.toHexString(b);
+            }
+            // hex string to uppercase
+            m_szUniqueID = m_szUniqueID.toUpperCase();
+            return m_szUniqueID;
+        } catch (Exception e) {
+            PipititLogger.e(TAG, "makeUniqueId -  end ", e);
+            id = id.toUpperCase();
+            PipititLogger.d(TAG, "Unique ID - " + id);
+            return id;
+        }
+
     }
 
     /**
@@ -199,6 +287,7 @@ public class SystemInfo {
     public String getNetworkCarrier(Context context) {
         TelephonyManager tm = getTelephonyManager(context);
         if (tm != null) {
+            tm.getDeviceId();
             String carrier = tm.getNetworkOperatorName();
             if (carrier != null && !carrier.isEmpty())
                 return carrier;

@@ -2,6 +2,8 @@ package com.hyperether.pipitit.cache;
 
 import android.util.Log;
 
+import com.hyperether.pipitit.util.Constants;
+
 /**
  * Pipitit Logger
  *
@@ -23,8 +25,8 @@ public class PipititLogger {
         PipititThread.getInstance().getmLoggerHandler().post(new Runnable() {
             @Override
             public void run() {
-                if (debugLogging() /*&& Log.isLoggable(TAG, Log.VERBOSE)*/) {
-                    Log.v(TAG, message);
+                if (debugLogging()) {
+                    Log.v(Constants.PIPITIT_TAG + TAG, message);
                 }
             }
         });
@@ -34,8 +36,8 @@ public class PipititLogger {
         PipititThread.getInstance().getmLoggerHandler().post(new Runnable() {
             @Override
             public void run() {
-                if (debugLogging() /*&& Log.isLoggable(TAG, Log.DEBUG)*/) {
-                    Log.d(TAG, message);
+                if (debugLogging()) {
+                    Log.d(Constants.PIPITIT_TAG + TAG, message);
                 }
             }
         });
@@ -45,8 +47,8 @@ public class PipititLogger {
         PipititThread.getInstance().getmLoggerHandler().post(new Runnable() {
             @Override
             public void run() {
-                if (debugLogging()/* && Log.isLoggable(TAG, Log.INFO)*/) {
-                    Log.i(TAG, message);
+                if (debugLogging()) {
+                    Log.i(Constants.PIPITIT_TAG + TAG, message);
                 }
             }
         });
@@ -56,8 +58,8 @@ public class PipititLogger {
         PipititThread.getInstance().getmLoggerHandler().post(new Runnable() {
             @Override
             public void run() {
-                if (debugLogging()/* && Log.isLoggable(TAG, Log.WARN)*/) {
-                    Log.w(TAG, message);
+                if (debugLogging()) {
+                    Log.w(Constants.PIPITIT_TAG + TAG, message);
                 }
             }
         });
@@ -67,8 +69,8 @@ public class PipititLogger {
         PipititThread.getInstance().getmLoggerHandler().post(new Runnable() {
             @Override
             public void run() {
-                if (debugLogging() /*&& Log.isLoggable(TAG, Log.ERROR)*/) {
-                    Log.e(TAG, message, t);
+                if (debugLogging()) {
+                    Log.e(Constants.PIPITIT_TAG + TAG, message, t);
                 }
             }
         });
@@ -78,9 +80,8 @@ public class PipititLogger {
         PipititThread.getInstance().getmLoggerHandler().post(new Runnable() {
             @Override
             public void run() {
-                if (debugLogging()/* && Log.isLoggable(TAG, Log.ERROR)*/) {
-                    Log.e(TAG, message);
-                }
+                Log.e(Constants.PIPITIT_TAG + TAG, message);
+
             }
         });
     }
