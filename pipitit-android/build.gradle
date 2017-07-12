@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/hyperether/pipitit-android-sdk'
     gitUrl = 'https://github.com/hyperether/pipitit-android-sdk.git'
 
-    libraryVersion = '1.0.1'
+    libraryVersion = '1.0.3'
 
     developerId = 'hyperether'
     developerName = 'HyperEther'
@@ -33,7 +33,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
-        versionName "1.0.1"
+        versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -54,7 +54,7 @@ dependencies {
     })
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.squareup.okhttp3:okhttp:3.8.0'
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.google.firebase:firebase-core:10.2.0'
     compile 'com.google.firebase:firebase-messaging:10.2.0'
     compile 'org.codehaus.jackson:jackson-core-asl:1.9.13'

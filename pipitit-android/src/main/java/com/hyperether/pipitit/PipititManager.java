@@ -3,6 +3,7 @@ package com.hyperether.pipitit;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 
 import com.android.volley.Request;
 import com.google.firebase.messaging.RemoteMessage;
@@ -70,6 +71,8 @@ public class PipititManager {
                 onPushReceived((RemoteMessage) value);
             } else if (value instanceof CampaignMessage) {
                 onCampaignMessageReceive((CampaignMessage) value);
+            } else if (value instanceof Intent) {
+                onIntentPushReceived((Intent) value);
             }
         }
 
@@ -243,8 +246,17 @@ public class PipititManager {
 
     private void onPushReceived(RemoteMessage message) {
         if (listener != null) {
-            listener.onMessageReceived(message);
-            PipititLogger.d(TAG, "Message send to PipititPushListener");
+            listener.onFirebaseMessageReceived(message);
+            PipititLogger.d(TAG, "Message from Firebase send to PipititPushListener");
+        } else {
+            PipititLogger.d(TAG, "PipititPushListener listener is null");
+        }
+    }
+
+    private void onIntentPushReceived(Intent message) {
+        if (listener != null) {
+            listener.onGCMMessageReceived(message);
+            PipititLogger.d(TAG, "Message from GCM send to PipititPushListener");
         } else {
             PipititLogger.d(TAG, "PipititPushListener listener is null");
         }

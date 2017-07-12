@@ -33,61 +33,70 @@ public class PipititMessageReceiver extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage message) {
-        PipititApp.getInstance().send(message);
-        CustomPushNotification customPushNotification = null;
-        try {
-            if (message != null) {
-                PipititLogger.d(TAG,
-                        "parse message: from = " + message.getFrom() + ", message ID = " +
-                                message.getMessageId() + ", send Time = " + message.getSentTime() +
-                                ", data = " + message.getData() + ", from = " + message.getFrom());
-                if (message.getData() != null && message.getData().get("message") != null)
-                    try {
-                        customPushNotification = new Gson().fromJson(
-                                message.getData().get("message"), CustomPushNotification.class);
-                    } catch (Exception e) {
-                        PipititLogger.e(TAG, "onMessageReceived", e);
-                    }
+        if (PipititManager.getConfig(getApplicationContext())
+                .isFcmRegistrationEnabled(getApplicationContext())) {
+            PipititApp.getInstance().send(message);
+            CustomPushNotification customPushNotification = null;
+            try {
+                if (message != null) {
+                    PipititLogger.d(TAG,
+                            "parse message: from = " + message.getFrom() + ", message ID = " +
+                                    message.getMessageId() + ", send Time = " +
+                                    message.getSentTime() +
+                                    ", data = " + message.getData() + ", from = " +
+                                    message.getFrom());
+                    if (message.getData() != null && message.getData().get("message") != null)
+                        try {
+                            customPushNotification = new Gson().fromJson(
+                                    message.getData().get("message"), CustomPushNotification.class);
+                        } catch (Exception e) {
+                            PipititLogger.e(TAG, "onFirebaseMessageReceived", e);
+                        }
+                }
+            } catch (Exception e) {
+                PipititLogger.e(TAG, "parse message ", e);
             }
-        } catch (Exception e) {
-            PipititLogger.e(TAG, "parse message ", e);
-        }
-        if (customPushNotification != null) {
-            sendAckToServer(customPushNotification);
-        }
-
-        PipititManager pipititManager = null;
-        if (PipititManager.isInitiated()) {
-            pipititManager = PipititManager.getInstance();
-        }
-
-        if (pipititManager != null) {
-            if (customPushNotification != null && CustomPushNotification.CAMPAIGN_MESSAGE
-                    .equalsIgnoreCase(customPushNotification.getMessageType())) {
-                CampaignMessage campaignMessage = parseCampaignMessage(customPushNotification);
-                PipititApp.getInstance().send(campaignMessage);
-            }
-        } else {
             if (customPushNotification != null) {
-                if (CustomPushNotification.CAMPAIGN_MESSAGE
+                sendAckToServer(customPushNotification);
+            }
+
+            PipititManager pipititManager = null;
+            if (PipititManager.isInitiated()) {
+                pipititManager = PipititManager.getInstance();
+            }
+
+            if (pipititManager != null) {
+                if (customPushNotification != null && CustomPushNotification.CAMPAIGN_MESSAGE
                         .equalsIgnoreCase(customPushNotification.getMessageType())) {
                     CampaignMessage campaignMessage = parseCampaignMessage(customPushNotification);
-                    NotificationHandler.getInstance().showNotification(getApplicationContext(), "",
-                            campaignMessage.getPayload().getMessage());
+                    PipititApp.getInstance().send(campaignMessage);
                 }
-            }
+            } else {
+                if (customPushNotification != null) {
+                    if (CustomPushNotification.CAMPAIGN_MESSAGE
+                            .equalsIgnoreCase(customPushNotification.getMessageType())) {
+                        CampaignMessage campaignMessage =
+                                parseCampaignMessage(customPushNotification);
+                        NotificationHandler.getInstance()
+                                .showNotification(getApplicationContext(), "",
+                                        campaignMessage.getPayload().getMessage());
+                    }
+                }
 
-            PipititLogger.d(TAG, "We receive PUSH message but PipititManager is not initiated!!!");
-            if (PipititManager.getConfig(getApplicationContext())
-                    .isNotificationWakeUp(getApplicationContext())) {
-                try {
-                    PipititLogger.d(TAG, "Start launch Activity");
-                    PackageManager pm = getApplicationContext().getPackageManager();
-                    Intent intent =
-                            pm.getLaunchIntentForPackage(getApplicationContext().getPackageName());
-                    startActivity(intent);
-                } catch (Exception e) {
-                    PipititLogger.e(TAG, "wake up notiifcation", e);
+                PipititLogger
+                        .d(TAG, "We receive PUSH message but PipititManager is not initiated!!!");
+                if (PipititManager.getConfig(getApplicationContext())
+                        .isNotificationWakeUp(getApplicationContext())) {
+                    try {
+                        PipititLogger.d(TAG, "Start launch Activity");
+                        PackageManager pm = getApplicationContext().getPackageManager();
+                        Intent intent =
+                                pm.getLaunchIntentForPackage(
+                                        getApplicationContext().getPackageName());
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        PipititLogger.e(TAG, "wake up notiifcation", e);
+                    }
                 }
             }
         }

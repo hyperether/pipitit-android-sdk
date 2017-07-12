@@ -1,5 +1,7 @@
 package com.hyperether.pipitit.firebase;
 
+import android.content.Intent;
+
 import com.google.firebase.messaging.RemoteMessage;
 
 /**
@@ -10,5 +12,8 @@ import com.google.firebase.messaging.RemoteMessage;
  */
 public interface PipititPushListener {
 
-    void onMessageReceived(RemoteMessage message);
+    void onFirebaseMessageReceived(RemoteMessage message);
+
+    void onGCMMessageReceived(Intent message);
+
 }
