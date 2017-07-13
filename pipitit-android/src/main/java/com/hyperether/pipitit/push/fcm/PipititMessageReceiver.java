@@ -10,8 +10,7 @@ import com.hyperether.pipitit.cache.PipititLogger;
 import com.hyperether.pipitit.push.MessageParser;
 
 /**
- * Pipitit message receiver. Class just {@link RemoteMessage} send to {@link
- * PipititManager}
+ * Pipitit firebase messages receiver.
  *
  * @author Nebojsa Brankovic
  * @author Slobodan Prijic
