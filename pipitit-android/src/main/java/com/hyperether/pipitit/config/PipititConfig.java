@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.hyperether.pipitit.R;
 import com.hyperether.pipitit.cache.PipititLogger;
-import com.hyperether.pipitit.firebase.PipititPushListener;
+import com.hyperether.pipitit.push.PipititPushListener;
 import com.hyperether.pipitit.util.Constants;
 import com.hyperether.pipitit.util.SharedPreferenceUtil;
 

@@ -24,21 +24,21 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
         <service
-            android:name="com.hyperether.pipitit.firebase.PipititInstanceId"
+            android:name=".push.fcm.PipititInstanceId"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
         <service
-            android:name="com.hyperether.pipitit.firebase.PipititMessageReceiver">
+            android:name=".push.fcm.PipititMessageReceiver">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
 
         <receiver
-            android:name="com.hyperether.pipitit.firebase.PipititGcmReceiver"
+            android:name=".push.gcm.PipititGcmReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE"/>

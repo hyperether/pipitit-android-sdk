@@ -1,4 +1,4 @@
-package com.hyperether.pipitit.firebase;
+package com.hyperether.pipitit.push.fcm;
 
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.hyperether.pipitit.cache.PipititLogger;

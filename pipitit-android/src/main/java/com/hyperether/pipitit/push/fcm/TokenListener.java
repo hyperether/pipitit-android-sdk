@@ -1,4 +1,4 @@
-package com.hyperether.pipitit.firebase;
+package com.hyperether.pipitit.push.fcm;
 
 /**
  * Listener is used for registration and deregistration push  token-a.
