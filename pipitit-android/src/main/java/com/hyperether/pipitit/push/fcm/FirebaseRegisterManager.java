@@ -1,4 +1,4 @@
-package com.hyperether.pipitit.firebase;
+package com.hyperether.pipitit.push.fcm;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -6,8 +6,8 @@ import android.os.AsyncTask;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.hyperether.pipitit.R;
 import com.hyperether.pipitit.PipititManager;
+import com.hyperether.pipitit.R;
 import com.hyperether.pipitit.cache.PipititLogger;
 import com.hyperether.pipitit.util.SharedPreferenceUtil;
 import com.hyperether.pipitit.util.SystemInfo;

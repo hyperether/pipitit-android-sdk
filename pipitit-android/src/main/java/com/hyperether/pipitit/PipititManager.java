@@ -22,11 +22,11 @@ import com.hyperether.pipitit.config.PipititConfig;
 import com.hyperether.pipitit.data.CampaignMessage;
 import com.hyperether.pipitit.data.Device;
 import com.hyperether.pipitit.data.Job;
-import com.hyperether.pipitit.firebase.FirebaseRegisterManager;
-import com.hyperether.pipitit.firebase.PipititPushListener;
-import com.hyperether.pipitit.firebase.TokenListener;
 import com.hyperether.pipitit.notification.NotificationHandler;
 import com.hyperether.pipitit.notification.dialogs.PipititBaseDialog;
+import com.hyperether.pipitit.push.PipititPushListener;
+import com.hyperether.pipitit.push.fcm.FirebaseRegisterManager;
+import com.hyperether.pipitit.push.fcm.TokenListener;
 import com.hyperether.pipitit.util.SharedPreferenceUtil;
 import com.hyperether.pipitit.websocket.PipititWebSocketManager;
 

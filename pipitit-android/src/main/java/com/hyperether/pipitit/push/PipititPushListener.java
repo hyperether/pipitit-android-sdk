@@ -1,4 +1,4 @@
-package com.hyperether.pipitit.firebase;
+package com.hyperether.pipitit.push;
 
 import android.content.Intent;
 
