@@ -22,6 +22,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.hyperether.pipitit.PipititManager;
 import com.hyperether.pipitit.cache.PipititLogger;
+import com.hyperether.pipitit.config.PipititConfig;
 
 import java.lang.reflect.Method;
 import java.security.MessageDigest;
@@ -52,7 +53,7 @@ public class SystemInfo {
     }
 
     public String getAndroidId(Context context) {
-        if (PipititManager.getConfig(context).isFcmRegistrationEnabled(context)) {
+        if (PipititConfig.isFcmRegistrationEnabled(context)) {
             FirebaseApp.initializeApp(context);
             return FirebaseInstanceId.getInstance().getId();
         } else

@@ -12,6 +12,7 @@ import com.hyperether.pipitit.api.request.PipititApiRequest;
 import com.hyperether.pipitit.api.response.CreateJobResponse;
 import com.hyperether.pipitit.api.response.DeviceCreateResponse;
 import com.hyperether.pipitit.cache.PipititLogger;
+import com.hyperether.pipitit.config.PipititConfig;
 import com.hyperether.pipitit.data.Device;
 import com.hyperether.pipitit.data.Job;
 
@@ -146,7 +147,7 @@ public class PipititApiManager {
                             String url,
                             Job job) throws IllegalArgumentException {
         try {
-            if (!PipititManager.getConfig(mAppContext).isSendingPushEnabled(mAppContext))
+            if (!PipititConfig.isSendingPushEnabled(mAppContext))
                 throw new IllegalAccessException("Sending message is not enabled in config!!!");
 
             CreateJobRequest createJobRequest = new CreateJobRequest(url, job);
@@ -195,9 +196,8 @@ public class PipititApiManager {
                                  String pid, String jid) {
         try {
             ConfirmProcessDeliveredRequest confirmProcessDeliveredRequest =
-                    new ConfirmProcessDeliveredRequest(
-                            PipititManager.getConfig(mAppContext).getUrl(mAppContext) + "/job/", jid,
-                            pid);
+                    new ConfirmProcessDeliveredRequest(PipititConfig.getUrl(mAppContext) + "/job/",
+                            jid, pid);
             new PipititApiRequest(new VolleyResponse() {
                 @Override
                 public void onSuccess(String response) {

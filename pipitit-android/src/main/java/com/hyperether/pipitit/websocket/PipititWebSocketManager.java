@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.hyperether.pipitit.PipititManager;
 import com.hyperether.pipitit.cache.PipititLogger;
+import com.hyperether.pipitit.config.PipititConfig;
 import com.hyperether.pipitit.util.Constants;
 import com.hyperether.pipitit.websocket.model.RegisteredMessage;
 import com.hyperether.pipitit.websocket.model.ServerResponseMessage;
@@ -36,7 +37,7 @@ public class PipititWebSocketManager implements WebSocketEvent {
 
     public void startWebSocket(String wsUrl, Context mAppContext) {
         //TODO make logic to keep connected
-        if (PipititManager.getConfig(mAppContext).isWebSocketEnabled(mAppContext)) {
+        if (PipititConfig.isWebSocketEnabled(mAppContext)) {
             client = new PipititWebSocketClient(this, mContext, wsUrl);
             client.connect();
         }

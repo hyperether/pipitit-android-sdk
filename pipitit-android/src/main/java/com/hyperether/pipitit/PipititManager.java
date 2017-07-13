@@ -222,7 +222,7 @@ public class PipititManager {
 
                             @Override
                             public void onError() {
-                                if (!getConfig(mAppContext).isFcmRegistrationEnabled(mAppContext)) {
+                                if (PipititConfig.isFcmRegistrationEnabled(mAppContext)) {
                                     PipititLogger.d(TAG,
                                             "Firebase is not enabled and push token is not send to Pipitit server!!!");
                                 }

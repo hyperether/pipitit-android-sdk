@@ -7,6 +7,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.hyperether.pipitit.PipititApp;
 import com.hyperether.pipitit.PipititManager;
 import com.hyperether.pipitit.cache.PipititLogger;
+import com.hyperether.pipitit.config.PipititConfig;
 import com.hyperether.pipitit.push.MessageParser;
 
 /**
@@ -29,7 +30,7 @@ public class PipititMessageReceiver extends FirebaseMessagingService {
         if (message == null)
             return;
         Context context = getApplicationContext();
-        if (PipititManager.getConfig(context).isFcmRegistrationEnabled(context)) {
+        if (PipititConfig.isFcmRegistrationEnabled(context)) {
             MessageParser messageParser = new MessageParser();
             messageParser.parse(context, message.getData().get("message"));
             PipititApp.getInstance().send(message.getData());

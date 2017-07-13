@@ -9,6 +9,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.hyperether.pipitit.PipititManager;
 import com.hyperether.pipitit.R;
 import com.hyperether.pipitit.cache.PipititLogger;
+import com.hyperether.pipitit.config.PipititConfig;
 import com.hyperether.pipitit.util.SharedPreferenceUtil;
 import com.hyperether.pipitit.util.SystemInfo;
 
@@ -56,7 +57,7 @@ public class FirebaseRegisterManager {
 
         String registrationId = getRegistrationId(context);
         if (registrationId.length() == 0 && !registrationRunning) {
-            if (PipititManager.getConfig(context).isFcmRegistrationEnabled(context)) {
+            if (PipititConfig.isFcmRegistrationEnabled(context)) {
                 PipititLogger.d(TAG, "registerInBackground: start RegisterAsyncTask");
                 FirebaseApp.initializeApp(context);
                 new RegisterAsyncTask(context).execute();
@@ -99,7 +100,7 @@ public class FirebaseRegisterManager {
     }
 
     public void unregisterInBackground(Context context) {
-        if (PipititManager.getConfig(context).isFcmRegistrationEnabled(context)) {
+        if (PipititConfig.isFcmRegistrationEnabled(context)) {
             FirebaseApp.initializeApp(context);
             PipititLogger.d(TAG, "unregisterInBackground");
             new UnregisterAsyncTask(context).execute();

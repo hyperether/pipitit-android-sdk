@@ -12,6 +12,7 @@ import com.hyperether.pipitit.api.ApiResponseCallback;
 import com.hyperether.pipitit.api.PipititApiManager;
 import com.hyperether.pipitit.api.response.PipititServerResponse;
 import com.hyperether.pipitit.cache.PipititLogger;
+import com.hyperether.pipitit.config.PipititConfig;
 import com.hyperether.pipitit.data.CampaignMessage;
 import com.hyperether.pipitit.data.CustomPushNotification;
 import com.hyperether.pipitit.notification.NotificationHandler;
@@ -62,7 +63,7 @@ public class MessageParser {
             }
 
             PipititLogger.d(TAG, "PUSH message received but PipititManager is not initiated!!!");
-            if (PipititManager.getConfig(context).isNotificationWakeUp(context)) {
+            if (PipititConfig.isNotificationWakeUp(context)) {
                 try {
                     PipititLogger.d(TAG, "Start launch Activity");
                     PackageManager pm = context.getPackageManager();

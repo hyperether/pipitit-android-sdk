@@ -86,23 +86,23 @@ public class PipititConfig {
                 builder.weSocketUrl);
     }
 
-    public boolean isFcmRegistrationEnabled(Context context) {
+    public static boolean isFcmRegistrationEnabled(Context context) {
         return SharedPreferenceUtil.getInstance()
                 .readBoolean(context, SharedPreferenceUtil.ATTRIBUTE_FCM_REGISTRATION_ENABLED,
                         true);
     }
 
-    public boolean isWebSocketEnabled(Context context) {
+    public static boolean isWebSocketEnabled(Context context) {
         return SharedPreferenceUtil.getInstance()
                 .readBoolean(context, SharedPreferenceUtil.ATTRIBUTE_WEBSOCKET, false);
     }
 
-    public boolean isSendingPushEnabled(Context context) {
+    public static boolean isSendingPushEnabled(Context context) {
         return SharedPreferenceUtil.getInstance()
                 .readBoolean(context, SharedPreferenceUtil.ATTRIBUTE_SENDING_PUSH, false);
     }
 
-    public boolean isDebug(Context context) {
+    public static boolean isDebug(Context context) {
         return SharedPreferenceUtil.getInstance()
                 .readBoolean(context, SharedPreferenceUtil.ATTRIBUTE_DEBUG, false);
     }
@@ -111,7 +111,7 @@ public class PipititConfig {
         return listener;
     }
 
-    public String getUrl(@NonNull Context context) {
+    public static String getUrl(@NonNull Context context) {
         if (context.getString(R.string.pipitit_api_key)
                 .equalsIgnoreCase("API_KEY"))
             throw new MissingResourceException(
@@ -123,12 +123,12 @@ public class PipititConfig {
                 context.getString(R.string.pipitit_api_key);
     }
 
-    public boolean isNotificationWakeUp(Context context) {
+    public static boolean isNotificationWakeUp(Context context) {
         return SharedPreferenceUtil.getInstance()
                 .readBoolean(context, SharedPreferenceUtil.ATTRIBUTE_WAKE_UP_NOTIFICATION, false);
     }
 
-    public String getWebSocketUrl(Context context) {
+    public static String getWebSocketUrl(Context context) {
         return SharedPreferenceUtil.getInstance()
                 .readString(context, SharedPreferenceUtil.ATTRIBUTE_WEB_SERVER_URL,
                         Constants.PIPITIT_WEB_SERVER);
