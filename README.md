@@ -4,7 +4,10 @@
 
 **Gradle import**
 
-    compile ('com.hyperether:pipitit-android:1.0.1@aar'){
+    compile ('com.hyperether:pipitit-android:1.0.6@aar'){
+        exclude group: 'com.google.firebase'
+        exclude group: 'com.android.volley'
+        exclude group: 'org.codehaus.jackson'
         transitive = true
     }
 
