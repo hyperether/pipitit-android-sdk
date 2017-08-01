@@ -10,6 +10,16 @@
         exclude group: 'org.codehaus.jackson'
         transitive = true
     }
+    
+    If you do not have FCM implement in project and you want to use from pipitit sdk you need to add:
+    Add rules to your root-level build.gradle file, to include the google-services plugin:
+    dependencies {
+        classpath 'com.google.gms:google-services:3.0.0'
+        // ...
+    }
+    Then, in your module Gradle file (usually the app/build.gradle), 
+    add the apply plugin line at the bottom of the file to enable the Gradle plugin:
+    apply plugin: 'com.google.gms.google-services'
 
 **Usage**
 
