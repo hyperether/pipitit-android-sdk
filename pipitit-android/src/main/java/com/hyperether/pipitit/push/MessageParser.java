@@ -39,7 +39,8 @@ public class MessageParser {
             PipititLogger.e(TAG, "parse message ", e);
         }
 
-        if (customPushNotification != null) {
+        if (customPushNotification != null && customPushNotification.getPid() != null &&
+                customPushNotification.getJid() != null) {
             sendAckToServer(customPushNotification, context);
         }
 
