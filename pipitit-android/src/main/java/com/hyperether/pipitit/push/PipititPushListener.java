@@ -12,8 +12,6 @@ import java.util.Map;
  */
 public interface PipititPushListener {
 
-    void onFirebaseMessageReceived(Map message);
-
     void onGCMMessageReceived(Intent message);
 
 }

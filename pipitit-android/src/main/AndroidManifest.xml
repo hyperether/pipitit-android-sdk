@@ -30,13 +30,6 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
-        <service
-            android:name=".push.fcm.PipititMessageReceiver">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-            </intent-filter>
-        </service>
-
         <receiver
             android:name=".push.gcm.PipititGcmReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">

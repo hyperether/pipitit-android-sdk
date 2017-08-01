@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import com.hyperether.pipitit.PipititApp;
 import com.hyperether.pipitit.cache.PipititLogger;
-import com.hyperether.pipitit.config.PipititConfig;
 import com.hyperether.pipitit.push.MessageParser;
 
 /**
@@ -27,7 +26,7 @@ public class PipititGcmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent != null && !PipititConfig.isFcmRegistrationEnabled(context)) {
+        if (intent != null) {
             PipititApp.getInstance().send(intent);
             Bundle bundle = intent.getExtras();
             String action = intent.getAction();

@@ -30,8 +30,6 @@ import com.hyperether.pipitit.push.fcm.TokenListener;
 import com.hyperether.pipitit.util.SharedPreferenceUtil;
 import com.hyperether.pipitit.websocket.PipititWebSocketManager;
 
-import java.util.Map;
-
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -72,8 +70,6 @@ public class PipititManager {
                 onCampaignMessageReceive((CampaignMessage) value);
             } else if (value instanceof Intent) {
                 onIntentPushReceived((Intent) value);
-            } else if (value instanceof Map) {
-                onPushReceived((Map) value);
             }
         }
 
@@ -245,14 +241,6 @@ public class PipititManager {
         PipititWebSocketManager.getInstance(mAppContext).startWebSocket(urlWs, mAppContext);
     }
 
-    private void onPushReceived(Map message) {
-        if (listener != null) {
-            listener.onFirebaseMessageReceived(message);
-            PipititLogger.d(TAG, "Message from Firebase send to PipititPushListener");
-        } else {
-            PipititLogger.d(TAG, "PipititPushListener listener is null");
-        }
-    }
 
     private void onIntentPushReceived(Intent message) {
         if (listener != null) {
