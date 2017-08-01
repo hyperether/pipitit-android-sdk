@@ -20,7 +20,6 @@ import android.view.WindowManager;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.hyperether.pipitit.PipititManager;
 import com.hyperether.pipitit.cache.PipititLogger;
 import com.hyperether.pipitit.config.PipititConfig;
 
@@ -62,17 +61,8 @@ public class SystemInfo {
 
     private String makeUniqueId(Context context) {
         String id = null;
-        String imei = "";
         String wifiMac = "";
         String bluetoothAddress = "";
-        try {
-            TelephonyManager tm = getTelephonyManager(context);
-            if (tm != null) {
-                imei = tm.getDeviceId();
-            }
-        } catch (Exception e) {
-            PipititLogger.e(TAG, "makeUniqueId -  imei ", e);
-        }
         String devIDShort = "131" +
                 Build.BOARD.length() % 10 + Build.BRAND.length() % 10 + Build.DEVICE.length() % 10 +
                 Build.DISPLAY.length() % 10 + Build.HOST.length() % 10 +
@@ -98,12 +88,12 @@ public class SystemInfo {
         } catch (Exception e) {
             PipititLogger.e(TAG, "makeUniqueId -  bluetooth ", e);
         }
-        PipititLogger.d(TAG, "Imei - " + imei);
+
         PipititLogger.d(TAG, "devIDShort - " + devIDShort);
         PipititLogger.d(TAG, "androidId - " + androidId);
         PipititLogger.d(TAG, "wifiMac - " + wifiMac);
         PipititLogger.d(TAG, "bluetooth - " + bluetoothAddress);
-        id = imei + devIDShort + androidId + wifiMac + bluetoothAddress;
+        id = devIDShort + androidId + wifiMac + bluetoothAddress;
         try {
             // compute md5
             MessageDigest m = null;
