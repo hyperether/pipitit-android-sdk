@@ -1,5 +1,7 @@
 # pipitit-android-sdk
 
+![Pipitit Logo](https://github.com/hyperether/pipitit-android-sdk/blob/master/Pipitit_Logo_450x100.png)
+
 **Android Sdk**
 
 **Gradle import**
