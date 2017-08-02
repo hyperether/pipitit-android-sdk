@@ -26,11 +26,11 @@
 **Usage**
 
         PipititConfig config = new PipititConfig.Builder()
-                .setDebug(true|false)
-                .setSendingPushEnabled(true|false)
+                .setDebug(true|false)                
                 .setListener(TODO: put listener Activity)
                 .setURL(TODO: put service URL)
                 .setWebSocketEnabled(true|false)
+                .setFcmRegistrationEnabled(true|false)
                 .setNotificationWakeUp(true|false)
                 .build(context);
         PipititManager.init(getApplication(), config);
