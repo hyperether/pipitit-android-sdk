@@ -10,9 +10,9 @@ public class Constants {
 
     public final static String PIPITIT_TAG = "Pipitit-";
 
-    public final static String PIPITIT_WEB_SERVER = "ws://52.53.86.56:5082";
+    public final static String PIPITIT_WEB_SERVER = "wss://ws.PIPITIT.COM";
 
-    public final static String PIPITIT_API_SERVER = "http://52.53.86.56:3000";
+    public final static String PIPITIT_API_SERVER = "https://api.pipitit.com";
 
     //web server message type
     public final static String MESSAGE_TYPE_REGISTER = "reg";
