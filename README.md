@@ -13,7 +13,7 @@ Track the status of each Campaign. Our dashboard allows you to track not only Ca
 
 **Gradle import**
 
-    compile ('com.hyperether:pipitit-android:1.1.0aar'){
+    compile ('com.hyperether:pipitit-android:1.1.1aar'){
         exclude group: 'com.google.firebase'
         exclude group: 'com.android.volley'
         exclude group: 'org.codehaus.jackson'
