@@ -1,7 +1,6 @@
 package com.hyperether.pipitit.util;
 
 import android.Manifest;
-import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -62,7 +61,6 @@ public class SystemInfo {
     private String makeUniqueId(Context context) {
         String id = null;
         String wifiMac = "";
-        String bluetoothAddress = "";
         String devIDShort = "131" +
                 Build.BOARD.length() % 10 + Build.BRAND.length() % 10 + Build.DEVICE.length() % 10 +
                 Build.DISPLAY.length() % 10 + Build.HOST.length() % 10 +
@@ -82,18 +80,10 @@ public class SystemInfo {
             PipititLogger.e(TAG, "makeUniqueId -  wifi ", e);
         }
 
-        try {
-            BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-            bluetoothAddress = bluetoothAdapter.getAddress();
-        } catch (Exception e) {
-            PipititLogger.e(TAG, "makeUniqueId -  bluetooth ", e);
-        }
-
         PipititLogger.d(TAG, "devIDShort - " + devIDShort);
         PipititLogger.d(TAG, "androidId - " + androidId);
         PipititLogger.d(TAG, "wifiMac - " + wifiMac);
-        PipititLogger.d(TAG, "bluetooth - " + bluetoothAddress);
-        id = devIDShort + androidId + wifiMac + bluetoothAddress;
+        id = devIDShort + androidId + wifiMac;
         try {
             // compute md5
             MessageDigest m = null;
