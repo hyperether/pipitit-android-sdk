@@ -7,8 +7,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-import okhttp3.OkHttpClient;
-
 /**
  * Class for managing api request
  *
@@ -43,7 +41,7 @@ public class VolleyController {
 
     private RequestQueue getRequestQueue(Context context) {
         if (mRequestQueue == null) {
-            mRequestQueue = Volley.newRequestQueue(context, new OkHttpStack(new OkHttpClient()));
+            mRequestQueue = Volley.newRequestQueue(context);
         }
         return mRequestQueue;
     }
