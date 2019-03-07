@@ -2,6 +2,7 @@ package com.hyperether.pipitit.notification;
 
 import android.app.Activity;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
 import com.hyperether.pipitit.cache.PipititLogger;
@@ -32,6 +34,10 @@ public class NotificationHandler {
     private static NotificationHandler instance;
     private final LinkedList<CampaignMessage> messageList = new LinkedList<>();
     private int notificationID = 0;
+    private String channelId = "pipitit_channel_1";
+    private String channelName = "pipitit_channel";
+    private String channelDesc = "pipitit_notifications";
+    private NotificationManager notificationManager;
 
     public static NotificationHandler getInstance() {
         if (instance == null)
@@ -111,7 +117,8 @@ public class NotificationHandler {
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle()
                 .setBigContentTitle(title)
                 .addLine(message);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
+        NotificationCompat.Builder notificationBuilder = getNotificationBuilder(context);
+        notificationBuilder
                 .setContentText(message)
                 .setSmallIcon(iconSmall)
                 .setWhen(System.currentTimeMillis())
@@ -141,15 +148,13 @@ public class NotificationHandler {
         notification.defaults |= Notification.DEFAULT_SOUND;
         notification.defaults |= Notification.DEFAULT_LIGHTS;
 
-        NotificationManager mNM = (NotificationManager)
-                context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager mNM = getNotificationManager(context);
         mNM.notify(notificationID, notification);
         return notificationID;
     }
 
     public void removeNotification(Context context, int notId) {
-        NotificationManager mNM = (NotificationManager)
-                context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager mNM = getNotificationManager(context);
         mNM.cancel(notId);
     }
 
@@ -199,5 +204,37 @@ public class NotificationHandler {
                 new PipititBaseDialog(activity, false, campaignMessage).show();
             }
         });
+    }
+
+    private NotificationManager getNotificationManager(Context context) {
+        if (notificationManager == null) {
+            // Create the NotificationChannel, but only on API 26+ because
+            // the NotificationChannel class is new and not in the support library
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                int importance = NotificationManager.IMPORTANCE_HIGH;
+                NotificationChannel channel = new NotificationChannel(channelId, channelName,
+                        importance);
+                channel.setDescription(channelDesc);
+                // Register the channel with the system; you can't change the importance
+                // or other notification behaviors after this
+                notificationManager = context.getSystemService(NotificationManager.class);
+                notificationManager.createNotificationChannel(channel);
+            } else {
+                notificationManager = (NotificationManager) context
+                        .getSystemService(Context.NOTIFICATION_SERVICE);
+            }
+        }
+        return notificationManager;
+    }
+
+    @SuppressWarnings("deprecation")
+    private NotificationCompat.Builder getNotificationBuilder(Context context) {
+        NotificationCompat.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            builder = new NotificationCompat.Builder(context, channelId);
+        } else {
+            builder = new NotificationCompat.Builder(context);
+        }
+        return builder;
     }
 }
